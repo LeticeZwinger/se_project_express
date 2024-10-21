@@ -26,6 +26,10 @@ app.use((err, req, res, next) => {
     .status(INTERNAL_SERVER_ERROR)
     .send({ message: "An error has occurred on the server." });
 });
+app.use((req, res, next) => {
+  req.user = { _id: "" };
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
