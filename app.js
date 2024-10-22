@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const listEndpoints = require("express-list-endpoints");
 mongoose.set("strictQuery", false);
 const mainRouter = require("./routes/index");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./utils/errors");
@@ -15,20 +16,33 @@ mongoose
   .catch(console.error);
 
 app.use(express.json());
+
+app.use((req, res, next) => {
+  req.user = {
+    _id: "6716acd2f0bf2284716ca181",
+  };
+  next();
+});
+
 app.use("/", mainRouter);
+
+const endpoints = listEndpoints(app);
+console.log("Registered routes:");
+endpoints.forEach((endpoint) => {
+  endpoint.methods.forEach((method) => {
+    console.log(`${method} ${endpoint.path}`);
+  });
+});
 
 app.use((req, res) => {
   res.status(NOT_FOUND).send({ message: "Requested resource not found" });
 });
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res
     .status(INTERNAL_SERVER_ERROR)
     .send({ message: "An error has occurred on the server." });
-});
-app.use((req, res, next) => {
-  req.user = { _id: "" };
-  next();
 });
 
 app.listen(PORT, () => {
