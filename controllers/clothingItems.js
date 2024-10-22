@@ -64,7 +64,8 @@ const deleteClothingItem = (req, res) => {
         return res
           .status(NOT_FOUND)
           .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
+      }
+      if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST)
           .send({ message: "Invalid clothing item ID" });
@@ -89,7 +90,9 @@ const getClothingItemById = (req, res) => {
         return res
           .status(NOT_FOUND)
           .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
+      }
+
+      if (err.name === "CastError") {
         return res
           .status(BAD_REQUEST)
           .send({ message: "Invalid clothing item ID" });
@@ -116,7 +119,9 @@ const likeItem = (req, res) => {
         return res
           .status(NOT_FOUND)
           .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
+      }
+
+      if (err.name === "CastError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid item ID" });
       }
 
@@ -141,7 +146,9 @@ const unlikeItem = (req, res) => {
         return res
           .status(NOT_FOUND)
           .send({ message: "Clothing item not found" });
-      } else if (err.name === "CastError") {
+      }
+
+      if (err.name === "CastError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid item ID" });
       }
 

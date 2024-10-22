@@ -1,9 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const listEndpoints = require("express-list-endpoints");
-mongoose.set("strictQuery", false);
 const mainRouter = require("./routes/index");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./utils/errors");
+
+mongoose.set("strictQuery", false);
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -43,6 +44,7 @@ app.use((err, req, res, next) => {
   res
     .status(INTERNAL_SERVER_ERROR)
     .send({ message: "An error has occurred on the server." });
+  next();
 });
 
 app.listen(PORT, () => {
