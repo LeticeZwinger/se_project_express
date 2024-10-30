@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./utils/errors");
@@ -17,13 +18,6 @@ mongoose
   .catch(console.error);
 
 app.use(express.json());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: "6716acd2f0bf2284716ca181",
-  };
-  next();
-});
 
 app.use("/", mainRouter);
 
