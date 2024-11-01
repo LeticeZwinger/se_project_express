@@ -69,20 +69,30 @@ const signUp = (req, res) => {
     return res.status(BAD_REQUEST).send({ message: "All fields are required" });
   }
 
-  User.create({
-    name,
-    avatar,
-    email,
-    password,
-  })
+  User.findOne({ email })
+    .then((existingUser) => {
+      if (existingUser) {
+        return res.status(CONFLICT).send({ message: "Email already exists" });
+      }
+
+      // If no user exists with the email, proceed to create a new user
+      return User.create({
+        name,
+        avatar,
+        email,
+        password,
+      });
+    })
     .then((user) => {
-      const userData = {
-        name: user.name,
-        avatar: user.avatar,
-        email: user.email,
-        _id: user._id,
-      };
-      res.status(201).send(userData);
+      if (user) {
+        const userData = {
+          name: user.name,
+          avatar: user.avatar,
+          email: user.email,
+          _id: user._id,
+        };
+        res.status(201).send(userData);
+      }
     })
     .catch((err) => {
       console.error("ERROR CODE:", err.code);
