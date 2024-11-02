@@ -23,6 +23,7 @@ const getUsers = (req, res) => {
 const getCurrentUser = (req, res) => {
   const userId = req.user._id;
 
+  // Get user by ID
   User.findById(userId)
     .then((user) => {
       if (!user) {
