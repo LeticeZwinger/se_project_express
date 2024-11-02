@@ -7,8 +7,8 @@ const auth = (req, res, next) => {
 
   if (!authorization || !authorization.startsWith("Bearer ")) {
     res.status(UNAUTHORIZED).send({ message: "Authorization required" });
+    return;
   }
-
   const token = authorization.replace("Bearer ", "");
   let payload;
   try {
@@ -17,6 +17,7 @@ const auth = (req, res, next) => {
   } catch (err) {
     console.error(err);
     res.status(FORBIDDEN).send({ message: "Authorization required" });
+    return;
   }
   return next();
 };
