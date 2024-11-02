@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
 const {
@@ -26,7 +26,7 @@ const getCurrentUser = (req, res) => {
   User.findById(userId)
     .then((user) => {
       if (!user) {
-        return res.status(NOT_FOUND).send({ message: "User not found" });
+        res.status(NOT_FOUND).send({ message: "User not found" });
       }
       res.send(user);
     })
@@ -41,7 +41,7 @@ const getCurrentUser = (req, res) => {
 const login = (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
-    return res
+    res
       .status(BAD_REQUEST)
       .send({ message: "Email and password are required" });
   }
@@ -57,7 +57,7 @@ const login = (req, res) => {
     .catch((err) => {
       console.error(err);
       res.status(UNAUTHORIZED).send({
-        message: `${email} // ${password} ${err} -Incorrect email or password-`,
+        message: `${email} // ${password} ${err} -Incorrect email or password`,
       });
     });
 };
@@ -66,7 +66,7 @@ const signUp = (req, res) => {
   const { name, avatar, email, password } = req.body;
 
   if (!name || !avatar || !email || !password) {
-    return res.status(BAD_REQUEST).send({ message: "All fields are required" });
+    res.status(BAD_REQUEST).send({ message: "All fields are required" });
   }
 
   User.findOne({ email })
@@ -89,18 +89,18 @@ const signUp = (req, res) => {
           email: user.email,
           _id: user._id,
         };
-        return res.status(201).send(userData);
+        res.status(201).send(userData);
       }
     })
     .catch((err) => {
       if (err === "User already exists!") {
-        return res.status(CONFLICT).send({ message: "Email already exists" });
+        res.status(CONFLICT).send({ message: "Email already exists" });
       }
       console.error("ERROR CODE:", err.code);
       console.error("ERROR:", err);
 
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
+        res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
       }
 
       res.status(INTERNAL_SERVER_ERROR).send({
@@ -119,13 +119,13 @@ const getUserById = (req, res) => {
       console.error(err);
 
       if (err.message === "UserNotFound") {
-        return res.status(NOT_FOUND).send({ message: "User not found" });
+        res.status(NOT_FOUND).send({ message: "User not found" });
       }
       if (err.name === "CastError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid user ID" });
+        res.status(BAD_REQUEST).send({ message: "Invalid user ID" });
       }
 
-      return res
+      res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: "An error has occurred on the server." });
     });
@@ -142,7 +142,7 @@ const updateUser = (req, res) => {
   )
     .then((user) => {
       if (!user) {
-        return res.status(NOT_FOUND).send({ message: "User not found" });
+        res.status(NOT_FOUND).send({ message: "User not found" });
       }
       res.send(user);
     })
@@ -150,7 +150,7 @@ const updateUser = (req, res) => {
       console.error(err);
 
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
+        res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
       }
 
       res
