@@ -72,10 +72,8 @@ const signUp = (req, res) => {
   User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
-        return res.status(CONFLICT).send({ message: "Email already exists" });
+        throw "User already exists!";
       }
-
-      // If no user exists with the email, proceed to create a new user
       return User.create({
         name,
         avatar,
@@ -91,21 +89,23 @@ const signUp = (req, res) => {
           email: user.email,
           _id: user._id,
         };
-        res.status(201).send(userData);
+        return res.status(201).send(userData);
       }
     })
     .catch((err) => {
-      console.error("ERROR CODE:", err.code);
-      console.error("ERROR:", err);
-      if (err.code === 11000) {
+      if (err === "User already exists!") {
         return res.status(CONFLICT).send({ message: "Email already exists" });
       }
+      console.error("ERROR CODE:", err.code);
+      console.error("ERROR:", err);
+
       if (err.name === "ValidationError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
       }
-      res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "An error occurred while creating the user." });
+
+      res.status(INTERNAL_SERVER_ERROR).send({
+        message: "An error occurred while creating the user.",
+      });
     });
 };
 
