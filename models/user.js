@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 8,
+
     select: false,
   },
 });
@@ -54,22 +54,12 @@ userSchema.statics.findUserByCredentials = function (email, password) {
     .select("+password")
     .then((user) => {
       if (!user) {
-        return Promise.reject(new Error("Incorrect email or password!!"));
+        return Promise.reject(new Error("Incorrect email or password"));
       }
-
-      console.log(password);
-      console.log(user.password);
-      console.log("Plaintext password:", password, "Length:", password.length);
-      console.log(
-        "Hashed password:",
-        user.password,
-        "Length:",
-        user.password.length
-      );
 
       return bcrypt.compare(password, user.password).then((matched) => {
         if (!matched) {
-          return Promise.reject(new Error("Incorrect email or password!"));
+          return Promise.reject(new Error("Incorrect email or password"));
         }
         return user;
       });

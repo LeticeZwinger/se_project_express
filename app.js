@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const User = require("./models/user");
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./utils/errors");
