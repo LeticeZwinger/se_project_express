@@ -36,7 +36,7 @@ const login = (req, res) => {
       .send({ message: "Email and password are required" });
   }
 
-  User.findUserByCredentials(email, password)
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
@@ -64,10 +64,10 @@ const signUp = (req, res) => {
     return res.status(BAD_REQUEST).send({ message: "All fields are required" });
   }
 
-  User.findOne({ email })
+  return User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
-        throw "User already exists!";
+        throw new Error("User already exists!");
       }
       return User.create({
         name,
@@ -95,7 +95,7 @@ const signUp = (req, res) => {
       console.error("ERROR:", err);
 
       if (err.name === "ValidationError") {
-        res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
+        return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
       }
 
       return res.status(INTERNAL_SERVER_ERROR).send({
