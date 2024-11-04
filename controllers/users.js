@@ -86,6 +86,9 @@ const signUp = (req, res) => {
         };
         return res.status(201).send(userData);
       }
+      return res
+        .status(INTERNAL_SERVER_ERROR)
+        .send({ message: " Failed to create user" });
     })
     .catch((err) => {
       if (err === "User already exists!") {
