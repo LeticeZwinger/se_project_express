@@ -101,7 +101,7 @@ const signUp = (req, res) => {
         return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
       }
 
-      return res.status(INTERNAL_SERVER_ERROR).send({
+      return res.status(CONFLICT).send({
         message: "An error occurred while creating the user.",
       });
     });
