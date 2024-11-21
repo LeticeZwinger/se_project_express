@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
@@ -16,6 +17,8 @@ mongoose
     console.log("connected to DB");
   })
   .catch(console.error);
+
+app.use(cors());
 
 app.use(express.json());
 
