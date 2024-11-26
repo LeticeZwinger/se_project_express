@@ -7,9 +7,11 @@ const {
 } = require("../utils/errors");
 
 const getClothingItems = (req, res) => {
-  const userId = req.user._id;
-  ClothingItem.find({ owner: userId })
-    .then((items) => res.status(200).send(items))
+  ClothingItem.find({})
+    .then((items) => {
+      res.status(200).send(items);
+      // console.log(req);
+    })
     .catch((err) => {
       console.error(err);
       return res
