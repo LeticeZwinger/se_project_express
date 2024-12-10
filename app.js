@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const { errors } = require("celebrate");
 
 const errorHandler = require("./middlewares/error-handler");
 const listEndpoints = require("express-list-endpoints");
@@ -36,7 +37,7 @@ endpoints.forEach((endpoint) => {
 app.use((req, res) => {
   res.status(NOT_FOUND).send({ message: "Requested resource not found" });
 });
-
+app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {

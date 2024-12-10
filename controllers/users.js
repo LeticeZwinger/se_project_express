@@ -1,18 +1,12 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
-const {
-  NOT_FOUND,
-  BAD_REQUEST,
-  INTERNAL_SERVER_ERROR,
-  UNAUTHORIZED,
-  CONFLICT,
-} = require("../utils/errors");
 
 const NotFoundError = require("../errors/NotFoundError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
-const conflictError = require("../errors/conflictError");
-const ForbiddenError = require("../errors/ForbiddenError");
+const ConflictError = require("../errors/conflictError");
+
+const BadRequestError = require("../errors/BadRequestError");
 
 const getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
@@ -56,13 +50,13 @@ const signUp = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
 
   if (!name || !avatar || !email || !password) {
-    return next(new BadRequestError("All fields are required")); // create BadRequestError function
+    return next(new BadRequestError("All fields are required"));
   }
 
   User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
-        throw new ConflictError("Email already exists"); //create ConflictError function
+        throw new ConflictError("Email already exists");
       }
       return User.create({ name, avatar, email, password });
     })
