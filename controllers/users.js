@@ -56,13 +56,13 @@ const signUp = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
 
   if (!name || !avatar || !email || !password) {
-    return next(new BadRequestError("All fields are required"));
+    return next(new BadRequestError("All fields are required")); // create BadRequestError function
   }
 
   User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
-        throw new ConflictError("Email already exists");
+        throw new ConflictError("Email already exists"); //create ConflictError function
       }
       return User.create({ name, avatar, email, password });
     })
@@ -84,7 +84,7 @@ const signUp = (req, res, next) => {
     });
 };
 
-const updateUser = (req, res) => {
+const updateUser = (req, res, next) => {
   const userId = req.user._id;
   const { name, avatar } = req.body;
 
@@ -95,20 +95,16 @@ const updateUser = (req, res) => {
   )
     .then((user) => {
       if (!user) {
-        res.status(NOT_FOUND).send({ message: "User not found" });
+        throw new NotFoundError("User not found");
       }
-      return res.send(user);
+      res.send(user);
     })
     .catch((err) => {
-      console.error(err);
-
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
+        next(new BadRequestError("Invalid data passed")); // create BadRequestError function
+      } else {
+        next(err);
       }
-
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "An error occurred while updating the profile" });
     });
 };
 
