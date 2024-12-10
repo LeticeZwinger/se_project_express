@@ -52,53 +52,35 @@ const login = (req, res, next) => {
     });
 };
 
-const signUp = (req, res) => {
+const signUp = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
 
   if (!name || !avatar || !email || !password) {
-    return res.status(BAD_REQUEST).send({ message: "All fields are required" });
+    return next(new BadRequestError("All fields are required"));
   }
 
-  return User.findOne({ email })
+  User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
-        throw new Error("User already exists!");
+        throw new ConflictError("Email already exists");
       }
-      return User.create({
-        name,
-        avatar,
-        email,
-        password,
-      });
+      return User.create({ name, avatar, email, password });
     })
     .then((user) => {
-      if (user) {
-        const userData = {
-          name: user.name,
-          avatar: user.avatar,
-          email: user.email,
-          _id: user._id,
-        };
-        return res.status(201).send(userData);
-      }
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: " Failed to create user" });
+      const userData = {
+        name: user.name,
+        avatar: user.avatar,
+        email: user.email,
+        _id: user._id,
+      };
+      res.status(201).send(userData);
     })
     .catch((err) => {
-      if (err === "User already exists!") {
-        return res.status(CONFLICT).send({ message: "Email already exists" });
-      }
-      console.error("ERROR CODE:", err.code);
-      console.error("ERROR:", err);
-
       if (err.name === "ValidationError") {
-        return res.status(BAD_REQUEST).send({ message: "Invalid data passed" });
+        next(new BadRequestError("Invalid data passed"));
+      } else {
+        next(err);
       }
-
-      return res.status(CONFLICT).send({
-        message: "An error occurred while creating the user.",
-      });
     });
 };
 
