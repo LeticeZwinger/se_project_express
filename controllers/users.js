@@ -10,6 +10,9 @@ const {
 } = require("../utils/errors");
 
 const NotFoundError = require("../errors/NotFoundError");
+const UnauthorizedError = require("../errors/UnauthorizedError");
+const conflictError = require("../errors/conflictError");
+const ForbiddenError = require("../errors/ForbiddenError");
 
 const getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
@@ -24,33 +27,28 @@ const getCurrentUser = (req, res, next) => {
     .catch(next);
 };
 
-const login = (req, res) => {
+const UnauthorizedError = require("../errors/unauthorized-err");
+
+const login = (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return res
-      .status(BAD_REQUEST)
-      .send({ message: "Email and password are required" });
+    return next(new BadRequestError("Email and password are required"));
   }
 
-  return User.findUserByCredentials(email, password)
+  User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
       });
-      return res.send({ token });
+      res.send({ token });
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
-        return res.status(UNAUTHORIZED).send({
-          message: "Incorrect email or password",
-        });
+        next(new UnauthorizedError("Incorrect email or password"));
+      } else {
+        next(err);
       }
-
-      console.error(err);
-      return res.status(INTERNAL_SERVER_ERROR).send({
-        message: "An unexpected error occurred",
-      });
     });
 };
 
