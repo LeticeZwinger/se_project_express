@@ -9,22 +9,19 @@ const {
   CONFLICT,
 } = require("../utils/errors");
 
-const getCurrentUser = (req, res) => {
+const NotFoundError = require("../errors/NotFoundError");
+
+const getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
 
   User.findById(userId)
     .then((user) => {
       if (!user) {
-        res.status(NOT_FOUND).send({ message: "User not found" });
+        throw new NotFoundError("User not found");
       }
-      return res.send(user);
+      res.send(user);
     })
-    .catch((err) => {
-      console.error(err);
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "An error occurred while retrieving user data" });
-    });
+    .catch(next);
 };
 
 const login = (req, res) => {

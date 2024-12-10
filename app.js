@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const errorHandler = require("./middlewares/error-handler");
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
 const { NOT_FOUND, INTERNAL_SERVER_ERROR } = require("./utils/errors");
@@ -36,13 +37,7 @@ app.use((req, res) => {
   res.status(NOT_FOUND).send({ message: "Requested resource not found" });
 });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res
-    .status(INTERNAL_SERVER_ERROR)
-    .send({ message: "An error has occurred on the server." });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
