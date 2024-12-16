@@ -21,8 +21,6 @@ const getCurrentUser = (req, res, next) => {
     .catch(next);
 };
 
-const UnauthorizedError = require("../errors/unauthorized-err");
-
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
