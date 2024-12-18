@@ -1,4 +1,5 @@
 const { celebrate, Joi } = require("celebrate");
+
 const validator = require("validator");
 
 const validateURL = (value, helpers) => {
@@ -19,6 +20,7 @@ const validateCardBody = celebrate({
       "string.empty": 'The "imageUrl" field must be filled in',
       "string.uri": 'The "imageUrl" field must be a valid URL',
     }),
+    weather: Joi.string().required().valid("hot", "warm", "cold"),
   }),
 });
 
@@ -57,7 +59,7 @@ const validateLoginBody = celebrate({
 
 const validateId = celebrate({
   params: Joi.object().keys({
-    id: Joi.string().hex().length(24).messages({
+    itemId: Joi.string().hex().length(24).messages({
       "string.length": 'The "id" must be 24 characters long',
       "string.hex": 'The "id" must be a valid hexadecimal value',
     }),
