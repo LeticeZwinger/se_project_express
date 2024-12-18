@@ -18,7 +18,6 @@ router.delete("/items/:itemId/likes", validateId, unlikeItem);
 
 module.exports = router;
 
-// // Controller function for handling the "like" logic
 // (err, req, res, next) => {
 //   if (isCelebrateError(err)) {
 //     // Handle Celebrate validation errors
@@ -28,7 +27,7 @@ module.exports = router;
 //         message: joiError.message, // General validation message
 //         details: joiError.details.map((detail) => ({
 //           path: detail.path.join("."),
-//           message: detail.message, // Specific validation message
+//           message: detail.message,
 //         })),
 //       };
 //     }
@@ -39,6 +38,5 @@ module.exports = router;
 //       errors: validationErrors,
 //     });
 //   }
-//   // Pass other errors to the default error handler
 //   next(err);
 // }
