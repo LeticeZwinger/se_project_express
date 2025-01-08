@@ -93,7 +93,7 @@ const updateUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
-        next(new BadRequestError("Invalid data passed")); // create BadRequestError function
+        next(new BadRequestError("Invalid data passed"));
       } else {
         next(err);
       }
