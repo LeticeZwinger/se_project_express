@@ -42,8 +42,8 @@ endpoints.forEach((endpoint) => {
   });
 });
 
-app.use((req, res) => {
-  res.status(NOT_FOUND).send({ message: "Requested resource not found" });
+app.use((req, res, next) => {
+  next(new NOT_FOUND("Requested resource not found"));
 });
 
 app.use(errorLogger);
