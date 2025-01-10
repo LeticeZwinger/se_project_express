@@ -5,19 +5,15 @@ const { JWT_SECRET } = require("../utils/config");
 const NotFoundError = require("../errors/NotFoundError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 const ConflictError = require("../errors/ConflictError");
-
+const InternalServerError = require("../errors/InternalServerError");
 const BadRequestError = require("../errors/BadRequestError");
 
 const getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
 
   User.findById(userId)
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError("User not found");
-      }
-      res.send(user);
-    })
+    .orFail(() => new NotFoundError("User not found"))
+    .then((user) => res.status(200).send(user))
     .catch(next);
 };
 
@@ -33,14 +29,13 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
       });
-      res.send({ token });
+      res.status(200).send({ token });
     })
     .catch((err) => {
       if (err.message === "Incorrect email or password") {
-        next(new UnauthorizedError("Incorrect email or password"));
-      } else {
-        next(err);
+        return next(new UnauthorizedError("Incorrect email or password"));
       }
+      next(new InternalServerError("An error occurred during login"));
     });
 };
 
@@ -69,10 +64,9 @@ const signUp = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === "ValidationError") {
-        next(new BadRequestError("Invalid data passed"));
-      } else {
-        next(err);
+        return next(new BadRequestError("Invalid user data"));
       }
+      next(new InternalServerError("An error occurred during registration"));
     });
 };
 
@@ -85,18 +79,15 @@ const updateUser = (req, res, next) => {
     { name, avatar },
     { new: true, runValidators: true }
   )
-    .then((user) => {
-      if (!user) {
-        throw new NotFoundError("User not found");
-      }
-      res.send(user);
-    })
+    .orFail(() => new NotFoundError("User not found"))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        next(new BadRequestError("Invalid data passed"));
-      } else {
-        next(err);
+        return next(new BadRequestError("Invalid profile data"));
       }
+      next(
+        new InternalServerError("An error occurred while updating the profile")
+      );
     });
 };
 
