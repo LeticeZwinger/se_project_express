@@ -3,10 +3,12 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const { errors } = require("celebrate");
 require("dotenv").config();
+const helmet = require("helmet");
 const { requestLogger, errorLogger } = require("./middlewares/loggers");
 const errorHandler = require("./middlewares/errorHandler");
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
+const limiter = require("./middlewares/rateLimit");
 const { NOT_FOUND } = require("./utils/errors");
 
 mongoose.set("strictQuery", false);
@@ -26,6 +28,8 @@ app.use(express.json());
 
 app.use(requestLogger);
 
+app.use(helmet());
+
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Server will crash now");
@@ -34,6 +38,7 @@ app.get("/crash-test", () => {
 
 app.use("/", mainRouter);
 
+app.use(limiter);
 const endpoints = listEndpoints(app);
 console.log("Registered routes:");
 endpoints.forEach((endpoint) => {
