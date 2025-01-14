@@ -17,13 +17,15 @@ const getClothingItems = (req, res, next) => {
 const createClothingItem = (req, res, next) => {
   const { name, weather, imageUrl } = req.body;
   const owner = req.user._id;
+
   ClothingItem.create({ name, weather, imageUrl, owner })
     .then((item) => res.status(201).send(item))
     .catch((err) => {
       if (err.name === "ValidationError") {
-        return next(new BadRequestError("Invalid data"));
+        next(new BadRequestError("Invalid data provided for clothing item"));
+      } else {
+        next(err);
       }
-      return next(new InternalServerError("Failed to create clothing item"));
     });
 };
 
@@ -35,9 +37,7 @@ const deleteClothingItem = (req, res, next) => {
     .orFail(() => new NotFoundError("Clothing item not found"))
     .then((item) => {
       if (item.owner.toString() !== userId) {
-        throw new UnauthorizedError(
-          "You are not authorized to delete this item"
-        );
+        throw new ForbiddenError("You are not authorized to delete this item");
       }
       return ClothingItem.findByIdAndRemove(itemId);
     })
@@ -46,9 +46,10 @@ const deleteClothingItem = (req, res, next) => {
     )
     .catch((err) => {
       if (err.name === "CastError") {
-        return next(new BadRequestError("Invalid clothing item ID"));
+        next(new BadRequestError("Invalid clothing item ID"));
+      } else {
+        next(err);
       }
-      return next(err);
     });
 };
 

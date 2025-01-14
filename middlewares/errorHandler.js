@@ -8,7 +8,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).send({
     message:
       statusCode === INTERNAL_SERVER_ERROR
-        ? "An error occurred on the server."
+        ? "An internal server error occurred. Please try again later."
         : message,
   });
 };
