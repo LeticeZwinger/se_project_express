@@ -9,9 +9,8 @@ const errorHandler = require("./middlewares/errorHandler");
 const listEndpoints = require("express-list-endpoints");
 const mainRouter = require("./routes/index");
 const limiter = require("./middlewares/rateLimit");
-const { NOT_FOUND } = require("./utils/errors");
-
 mongoose.set("strictQuery", false);
+const NotFoundError = require("./errors/NotFoundError");
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -48,7 +47,7 @@ endpoints.forEach((endpoint) => {
 });
 
 app.use((req, res, next) => {
-  next(new NOT_FOUND("Requested resource not found"));
+  next(new NotFoundError("Requested resource not found"));
 });
 
 app.use(errorLogger);
