@@ -1,11 +1,9 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const { JWT_SECRET } = require("../utils/config");
-
 const NotFoundError = require("../errors/NotFoundError");
 const UnauthorizedError = require("../errors/UnauthorizedError");
 const ConflictError = require("../errors/ConflictError");
-const InternalServerError = require("../errors/InternalServerError");
 const BadRequestError = require("../errors/BadRequestError");
 
 const getCurrentUser = (req, res, next) => {
@@ -20,10 +18,6 @@ const getCurrentUser = (req, res, next) => {
 const login = (req, res, next) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return next(new BadRequestError("Email and password are required"));
-  }
-
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
@@ -35,22 +29,20 @@ const login = (req, res, next) => {
       if (err.message === "Incorrect email or password") {
         return next(new UnauthorizedError("Incorrect email or password"));
       }
-      next(new InternalServerError("An error occurred during login"));
+      console.error(err);
+      next(err);
     });
 };
 
 const signUp = (req, res, next) => {
   const { name, avatar, email, password } = req.body;
 
-  if (!name || !avatar || !email || !password) {
-    return next(new BadRequestError("All fields are required"));
-  }
-
   User.findOne({ email })
     .then((existingUser) => {
       if (existingUser) {
         throw new ConflictError("Email already exists");
       }
+
       return User.create({ name, avatar, email, password });
     })
     .then((user) => {
@@ -66,7 +58,8 @@ const signUp = (req, res, next) => {
       if (err.name === "ValidationError") {
         return next(new BadRequestError("Invalid user data"));
       }
-      next(new InternalServerError("An error occurred during registration"));
+      console.error(err);
+      next(err);
     });
 };
 
@@ -85,9 +78,8 @@ const updateUser = (req, res, next) => {
       if (err.name === "ValidationError") {
         return next(new BadRequestError("Invalid profile data"));
       }
-      next(
-        new InternalServerError("An error occurred while updating the profile")
-      );
+      console.error(err);
+      next(err);
     });
 };
 

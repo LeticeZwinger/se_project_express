@@ -1,7 +1,5 @@
 const ClothingItem = require("../models/clothingItem");
 const NotFoundError = require("../errors/NotFoundError");
-const UnauthorizedError = require("../errors/UnauthorizedError");
-
 const InternalServerError = require("../errors/InternalServerError");
 const BadRequestError = require("../errors/BadRequestError");
 const ForbiddenError = require("../errors/ForbiddenError");
