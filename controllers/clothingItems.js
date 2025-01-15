@@ -7,7 +7,7 @@ const ForbiddenError = require("../errors/ForbiddenError");
 const getClothingItems = (req, res, next) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((err) =>
+    .catch(() =>
       next(new InternalServerError("Failed to fetch clothing items"))
     );
 };

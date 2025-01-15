@@ -9,7 +9,6 @@ const validateURL = (value, helpers) => {
   return helpers.error("string.uri");
 };
 
-// add clothes
 const validateCardBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30).messages({
@@ -25,7 +24,6 @@ const validateCardBody = celebrate({
   }),
 });
 
-//sign up
 const validateUserBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).messages({
@@ -47,7 +45,6 @@ const validateUserBody = celebrate({
   }),
 });
 
-// update user
 const validateUserUpdateBody = celebrate({
   body: Joi.object().keys({
     name: Joi.string().min(2).max(30).messages({
@@ -62,7 +59,6 @@ const validateUserUpdateBody = celebrate({
   }),
 });
 
-//login
 const validateLoginBody = celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email().messages({
@@ -75,7 +71,6 @@ const validateLoginBody = celebrate({
   }),
 });
 
-//everithing that uses id, like/unlike/delete/
 const validateId = celebrate({
   params: Joi.object().keys({
     itemId: Joi.string().hex().length(24).messages({

@@ -30,7 +30,7 @@ const login = (req, res, next) => {
         return next(new UnauthorizedError("Incorrect email or password"));
       }
       console.error(err);
-      next(err);
+      return next(err);
     });
 };
 
@@ -59,7 +59,7 @@ const signUp = (req, res, next) => {
         return next(new BadRequestError("Invalid user data"));
       }
       console.error(err);
-      next(err);
+      return next(err);
     });
 };
 
@@ -79,7 +79,7 @@ const updateUser = (req, res, next) => {
         return next(new BadRequestError("Invalid profile data"));
       }
       console.error(err);
-      next(err);
+      return next(err);
     });
 };
 

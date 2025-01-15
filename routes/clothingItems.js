@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const { validateCardBody, validateId } = require("../middlewares/validation");
-const { isCelebrateError } = require("celebrate");
 
 const {
   createClothingItem,
