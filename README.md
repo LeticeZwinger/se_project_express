@@ -16,6 +16,6 @@ Before committing your code, make sure you edit the file `sprint.txt` in the roo
 
 The application is hosted and can be accessed at the following domain:
 
-🔗 **[leticez.soon.it](https://leticez.soon.it/)**
+🔗 **[leticezwinger.com](https://leticezwinger.com/)**
 
 Click the link above to explore the application.
