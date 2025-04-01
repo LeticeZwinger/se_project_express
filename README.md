@@ -63,47 +63,47 @@ Posts are saved into [MongoDB](https://www.mongodb.com/) database and implemente
 
 # Plugins
 
-  Express
-  • express v4.18.2 – Minimal and flexible Node.js web application framework
+    Express
+    • express v4.18.2 – Minimal and flexible Node.js web application framework
 
-  ESLint
-  • eslint v8.56.0 – Identifies and reports on patterns found in ECMAScript/JavaScript code
-  • eslint-config-airbnb-base v15.0.0 – Provides Airbnb’s base JS style guide for ESLint
-  • eslint-plugin-import v2.29.1 – Supports linting of ES6+ import/export syntax
+    ESLint
+    • eslint v8.56.0 – Identifies and reports on patterns found in ECMAScript/JavaScript code
+    • eslint-config-airbnb-base v15.0.0 – Provides Airbnb’s base JS style guide for ESLint
+    • eslint-plugin-import v2.29.1 – Supports linting of ES6+ import/export syntax
 
-  Mongoose
-  • mongoose v7.6.3 – Elegant MongoDB object modeling for Node.js
+    Mongoose
+    • mongoose v7.6.3 – Elegant MongoDB object modeling for Node.js
 
-  Validator
-  • validator v13.11.0 – A library of string validators and sanitizers
+    Validator
+    • validator v13.11.0 – A library of string validators and sanitizers
 
-  Bcryptjs
-  • bcryptjs v2.4.3 – Used for hashing passwords
+    Bcryptjs
+    • bcryptjs v2.4.3 – Used for hashing passwords
 
-  Jsonwebtoken
-  • jsonwebtoken v9.0.2 – Enables authentication using JWT
+    Jsonwebtoken
+    • jsonwebtoken v9.0.2 – Enables authentication using JWT
 
-  Celebrate/Joi
-  • celebrate v15.0.1 – Middleware for validating request bodies using Joi schemas
-  • joi v17.9.2 – Data validator for JavaScript objects
+    Celebrate/Joi
+    • celebrate v15.0.1 – Middleware for validating request bodies using Joi schemas
+    • joi v17.9.2 – Data validator for JavaScript objects
 
-  Helmet
-  • helmet v7.0.0 – Helps secure Express apps by setting various HTTP headers
+    Helmet
+    • helmet v7.0.0 – Helps secure Express apps by setting various HTTP headers
 
-  Winston
-  • winston v3.9.0 – A versatile logging library for Node.js
+    Winston
+    • winston v3.9.0 – A versatile logging library for Node.js
 
-  Express-rate-limit
-  • express-rate-limit v7.0.0 – Basic IP rate-limiting middleware to prevent abuse
+    Express-rate-limit
+    • express-rate-limit v7.0.0 – Basic IP rate-limiting middleware to prevent abuse
 
-  Cors
-  • cors v2.8.5 – Middleware to enable Cross-Origin Resource Sharing
+    Cors
+    • cors v2.8.5 – Middleware to enable Cross-Origin Resource Sharing
 
-  Dotenv
-  • dotenv v16.3.1 – Loads environment variables from a .env file into process.env
+    Dotenv
+    • dotenv v16.3.1 – Loads environment variables from a .env file into process.env
 
-  MongoDB Memory Server (for testing)
-  • mongodb-memory-server v8.12.1 – Spawns a real MongoDB Server for testing without persistence
+    MongoDB Memory Server (for testing)
+    • mongodb-memory-server v8.12.1 – Spawns a real MongoDB Server for testing without persistence
 	
 
 
