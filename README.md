@@ -18,48 +18,44 @@ This is a Triple10 web dev program project. In this project we practice:
 - Separating logic into modular files (controllers, routes, middlewares, models)
 - Deploying the backend on a Virtual Machine (VM) using Google Cloud Platform (GCP)
 
-![desktop-view](/src/assets/wtwr.png)
+![desktop-view](/public/wtwr.png)
 
 # API
 
 Posts are saved into [MongoDB](https://www.mongodb.com/) database and implemented API calls from [OpenWeather](https://openweathermap.org/):
 
-* GET - getClothingItems = ()  
-* GET - getClothingItemById = (itemId)  
-* POST - createClothingItem = ({ name, weather, imageUrl })  
-* DELETE - deleteClothingItem = (itemId, userId)  
-* PUT - likeItem = (itemId, userId)  
-* DELETE - unlikeItem = (itemId, userId)
-* POST - signUp = ({ name, avatar, email, password })  
-* POST - login = ({ email, password })  
-* GET - getCurrentUser = (userId)  
-* PATCH - updateUser = ({ name, avatar }, userId)
-
-
-
-
+- GET - getClothingItems = ()
+- GET - getClothingItemById = (itemId)
+- POST - createClothingItem = ({ name, weather, imageUrl })
+- DELETE - deleteClothingItem = (itemId, userId)
+- PUT - likeItem = (itemId, userId)
+- DELETE - unlikeItem = (itemId, userId)
+- POST - signUp = ({ name, avatar, email, password })
+- POST - login = ({ email, password })
+- GET - getCurrentUser = (userId)
+- PATCH - updateUser = ({ name, avatar }, userId)
 
 # Deploy
 
-	Install Dependencies
-	• npm install
+    Install Dependencies
+    • npm install
 
-	Development Mode
-	• npm run dev
+    Development Mode
+    • npm run dev
 
-	Production Build
-	• npm run build
+    Production Build
+    • npm run build
 
-	Deploying
-	• npm run deploy
-	
+    Deploying
+    • npm run deploy
 
 # System Requirements
- * Node.js: v18.0.0 or later
- * npm: v8.0.0 or later (or an equivalent package manager such as Yarn)
- * MongoDB: v6.0 or later – A running MongoDB instance is required for database operations
- * Postman or similar tool: For API testing during development
- * Web Browser: A modern browser (e.g. Chrome, Firefox, Safari, or Edge) may be used for viewing responses via front-end or API docs
+
+- Node.js: v18.0.0 or later
+- npm: v8.0.0 or later (or an equivalent package manager such as Yarn)
+- MongoDB: v6.0 or later – A running MongoDB instance is required for database operations
+- Postman or similar tool: For API testing during development
+- Web Browser: A modern browser (e.g. Chrome, Firefox, Safari, or Edge) may be used for viewing responses via front-end or API docs
 
 # Plugins
 
@@ -104,13 +100,7 @@ Posts are saved into [MongoDB](https://www.mongodb.com/) database and implemente
 
     MongoDB Memory Server (for testing)
     • mongodb-memory-server v8.12.1 – Spawns a real MongoDB Server for testing without persistence
-	
-
 
 # [Video Demo](https://youtu.be/TOht5NQbq64)
 
 # [Figma Design](https://www.figma.com/design/dQLJwEKasIdspciJAJrCaf/Sprint-11_-WTWR?node-id=311-433&p=f&t=8heaDjekYZaoSaKv-0)
-
-
-
-
