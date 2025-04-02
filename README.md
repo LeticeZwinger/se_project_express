@@ -2,6 +2,17 @@
 
 # Table of Contents
 
+- [Table of Contents](#table-of-contents)
+- [Description](#description)
+- [API](#api)
+- [Deploy](#deploy)
+- [System Requirements](#system-requirements)
+- [Plugins](#plugins)
+- [<a href="https://youtu.be/TOht5NQbq64" rel="nofollow">Video Demo</a>](https://youtu.be/TOht5NQbq64)
+- [<a href="https://www.figma.com/design/dQLJwEKasIdspciJAJrCaf/Sprint-11_-WTWR?node-id=311-433&amp;p=f&amp;t=8heaDjekYZaoSaKv-0" rel="nofollow">Figma Design</a>](https://www.figma.com/design/dQLJwEKasIdspciJAJrCaf/Sprint-11_-WTWR?node-id=311-433&p=f&t=8heaDjekYZaoSaKv-0)
+
+<!-- Created by https://github.com/ekalinin/github-markdown-toc -->
+
 # Description
 
 This is the backend of a full-stack web app that helps users save outfits and decide what to wear based on the weather. Built with Node.js, Express, and MongoDB, the server manages user accounts, validates and stores clothing items, and supports weather-based outfit recommendations.
